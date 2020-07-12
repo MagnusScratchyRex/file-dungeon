@@ -1,5 +1,4 @@
-# File DungeonCC = gcc
-
+# File Dungeon
 File-exploration with a twist!
 
 Oh no! Your whole system has been transformed into a dungeon!
