@@ -3,8 +3,8 @@ CFLAGS = -std=c11 -Wall -Wconversion -Werror -Wextra -Wpedantic \
 	 -Wwrite-strings -O2
 LDFLAGS = -lncurses
 
-objects = dirsensor.o
-executable = dirsensor
+objects = fsmap.o
+executable = fsmap
 
 all: $(executable)
 
@@ -14,4 +14,4 @@ clean:
 $(executable): $(objects)
 	$(CC) $(objects) $(LDFLAGS) -o $(executable)
 
-dirsensor.o: dirsensor.c
+fsmap.o: fsmap.c
