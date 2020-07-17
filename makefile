@@ -3,7 +3,7 @@ CFLAGS = -std=c11 -Wall -Wconversion -Werror -Wextra -Wpedantic \
 	 -Wwrite-strings -O2
 LDFLAGS = -lncurses
 
-objects = fd.o
+objects = main.o
 executable = fd
 
 all: $(executable)
@@ -14,4 +14,4 @@ clean:
 $(executable): $(objects)
 	$(CC) $(objects) $(LDFLAGS) -o $(executable)
 
-fd.o: main.c
+main.o: main.c
