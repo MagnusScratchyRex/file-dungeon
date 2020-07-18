@@ -1,10 +1,10 @@
 CC = gcc
 CFLAGS = -std=c11 -Wall -Wconversion -Werror -Wextra -Wpedantic \
 	 -Wwrite-strings -O2
-LDFLAGS = -lncurses
+LDFLAGS =
 
-objects = fsmap.o
-executable = fsmap
+objects = fsmap_test.o fsmap.o
+executable = fsmap_test
 
 all: $(executable)
 
@@ -14,4 +14,5 @@ clean:
 $(executable): $(objects)
 	$(CC) $(objects) $(LDFLAGS) -o $(executable)
 
-fsmap.o: fsmap.c
+fsmap_test.o: fsmap_test.c fsmap.h
+fsmap.o: fsmap.c fsmap.h
