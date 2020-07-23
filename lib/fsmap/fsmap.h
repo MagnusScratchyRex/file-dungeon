@@ -37,4 +37,7 @@ extern const char *fsmap_get_filename(const char *filepath);
  */
 extern const char *fsmap_get_file_extension(const char *filepath);
 
+// TODO:
+extern int fsmap_guess_filetype(const char *filepath);
+
 #endif
