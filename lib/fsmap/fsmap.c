@@ -36,31 +36,44 @@ const char *fsmap_get_file_extension(const char *filepath) {
   return (extension == NULL ? NULL : extension + 1);
 }
 
-enum filetypes { TEXT = 0 , AUDIO = 1, VIDEO = 3, IMAGE = 4, EXEC };
-static const char *text_extensions[6] = { "txt", "c", "h", "md", "rb", "py" };
-static const char *audio_extensions[] = { "mp3", "ogg", "wav", "flac" };
-static const char *video_extensions[] = { "mp4", "mkv", "flv" };
-static const char *image_extensions[] = { "png", "jpg", "jpeg", "svg", "webp" };
-static const char **extensions[4] = {
+// Extensions array end with NULL to mark as a stop for the pointer in
+// fsmap_guess_filetype
+static const char *text_extensions[] = { "txt", "c", "h", "md", "rb", NULL };
+static const char *audio_extensions[] = { "mp3", "ogg", "wav", "flac", NULL };
+static const char *video_extensions[] = { "mp4", "mkv", "flv", NULL };
+static const char *image_extensions[] = { "png", "jpg", "jpeg", "svg", NULL };
+
+#define NB_FILETYPES 4 // Filetypes that can be found via file extensions
+
+// Each extension arrays must stay in the same order as the one defined in the
+// filetype enum.
+static const char **extensions[NB_FILETYPES] = {
   text_extensions,
   audio_extensions,
   video_extensions,
   image_extensions
 };
 
-int fsmap_guess_filetype(const char *filepath) {
 
-  /*
-  printf("TEXT:\n");
-  for (int i = 0; i < 6; i++) {
-    printf("%s\n", extensions[TEXT][i]);
+filetype fsmap_guess_filetype(const char *filepath) {
+  // TODO: check for executable first
+  const char *ext = fsmap_get_file_extension(filepath);
+  if (ext == NULL) {
+    return UNKNOWN;
   }
 
-  printf("AUDIO:\n");
-  for (int i = 0; i < 4; i++) {
-    printf("%s\n", extensions[AUDIO][i]);
+  const char *ptr;
+  for (int i = 0; i < NB_FILETYPES; i++) {
+    int k = 0;
+    ptr = extensions[i][k];
+    while (ptr != NULL) {
+      if (strcmp(ptr, ext) == 0) {
+        return i;
+      }
+      k++;
+      ptr = extensions[i][k];
+    }
   }
-  */
 
-  return filepath == NULL;
+  return UNKNOWN;
 }
